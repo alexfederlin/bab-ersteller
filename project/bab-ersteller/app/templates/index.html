@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h2>Planes Overview</h2>
+    <a href="{{ url_for('main.new_plane') }}">Add New Plane</a>
+    
+    {% if planes %}
+        <ul>
+            {% for plane in planes %}
+                <li>
+                    <strong>{{ plane.name }}</strong> ({{ plane.model }}) - {{ plane.manufacturer }}
+                    <a href="{{ url_for('main.reports') }}?plane_id={{ plane.id }}">View Reports</a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No planes have been added yet.</p>
+    {% endif %}
+{% endblock %}

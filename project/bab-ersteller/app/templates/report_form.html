@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>{{ 'Edit Report' if report else 'Add New Report' }}</h2>
+<form method="POST">
+    {{ form.hidden_tag() }}
+
+    <div>
+        <label for="plane">Plane</label>
+        {{ form.plane(class="form-control") }}
+    </div>
+
+    <div>
+        <label for="date">Date</label>
+        {{ form.date(class="form-control") }}
+    </div>
+
+    <h3>Tasks</h3>
+    <div id="task-container">
+        {% for task_form in form.tasks %}
+            <div class="task-item">
+                <label>Art der Beanstandung / Durchzuführende Arbeiten</label>
+                {{ task_form.description(class="form-control") }}
+
+                <label>Art der Behebung / Durchgeführte Arbeiten</label>
+                {{ task_form.fix_description(class="form-control") }}
+
+                <label>Bezug / Seriennummer</label>
+                {{ task_form.reference(class="form-control") }}
+
+                <label>Ausführender</label>
+                {{ task_form.executor(class="form-control") }}
+            </div>
+        {% endfor %}
+    </div>
+
+    <button type="submit">{{ 'Update Report' if report else 'Add Report' }}</button>
+</form>
+{% endblock %}

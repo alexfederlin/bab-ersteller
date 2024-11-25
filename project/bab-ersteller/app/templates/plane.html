@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h2>{{ 'Edit Plane' if plane.id else 'Add New Plane' }}</h2>
+    <form method="POST">
+        {{ form.hidden_tag() }}
+
+        <div>
+            <label for="name">Plane Name</label>
+            {{ form.name(class="form-control") }}
+        </div>
+
+        <div>
+            <label for="model">Model</label>
+            {{ form.model(class="form-control") }}
+        </div>
+
+        <div>
+            <label for="manufacturer">Manufacturer</label>
+            {{ form.manufacturer(class="form-control") }}
+        </div>
+
+        <div>
+            <button type="submit">{{ 'Update Plane' if plane.id else 'Add Plane' }}</button>
+        </div>
+    </form>
+
+    <a href="{{ url_for('main.planes') }}">Back to Planes List</a>
+{% endblock %}

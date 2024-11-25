@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h2>Planes</h2>
+    <a href="{{ url_for('main.new_plane') }}">Add New Plane</a>
+
+    {% if planes %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Model</th>
+                    <th>Manufacturer</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for plane in planes %}
+                    <tr>
+                        <td>{{ plane.name }}</td>
+                        <td>{{ plane.model }}</td>
+                        <td>{{ plane.manufacturer }}</td>
+                        <td>
+                            <a href="{{ url_for('main.edit_plane', plane_id=plane.id) }}">Edit</a> |
+                            <a href="{{ url_for('main.delete_plane', plane_id=plane.id) }}" 
+                               onclick="return confirm('Are you sure you want to delete this plane?');">Delete</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No planes have been added yet.</p>
+    {% endif %}
+{% endblock %}
