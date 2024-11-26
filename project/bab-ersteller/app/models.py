@@ -17,8 +17,9 @@ class Task(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     lfd_nr = db.Column(db.Integer, nullable=False)
     report_id = db.Column(db.Integer, db.ForeignKey('report.id'), nullable=False)
-    description = db.Column(db.String(500), nullable=False)
+    task_description = db.Column(db.String(500), nullable=False)  # Renamed field
     fix_description = db.Column(db.String(500), nullable=False)
     reference = db.Column(db.String(100))
     date = db.Column(db.Date, nullable=False)
     executor = db.Column(db.String(100), nullable=False)
+

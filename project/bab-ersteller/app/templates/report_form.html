@@ -20,7 +20,7 @@
         {% for task_form in form.tasks %}
             <div class="task-item">
                 <label>Art der Beanstandung / Durchzuführende Arbeiten</label>
-                {{ task_form.description(class="form-control") }}
+                {{ task_form.task_description(class="form-control") }}
 
                 <label>Art der Behebung / Durchgeführte Arbeiten</label>
                 {{ task_form.fix_description(class="form-control") }}
@@ -30,10 +30,54 @@
 
                 <label>Ausführender</label>
                 {{ task_form.executor(class="form-control") }}
+
+                <button type="button" class="remove-task">🗑️</button>
             </div>
         {% endfor %}
     </div>
 
-    <button type="submit">{{ 'Update Report' if report else 'Add Report' }}</button>
+    <button type="button" id="add-task">➕ Add Task</button>
+
+    <div>
+        <button type="submit">{{ 'Update Report' if report else 'Add Report' }}</button>
+        <a href="{{ url_for('main.reports') }}" class="btn btn-secondary">Back to Reports List</a>
+    </div>
 </form>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        let taskIndex = {{ form.tasks|length }};
+        const taskContainer = document.getElementById('task-container');
+        const addTaskButton = document.getElementById('add-task');
+
+        // Add a new task
+        addTaskButton.addEventListener('click', function () {
+            const newTaskHTML = `
+            <div class="task-item">
+                <label>Art der Beanstandung / Durchzuführende Arbeiten</label>
+                <textarea name="tasks-${taskIndex}-task_description" class="form-control"></textarea>
+
+                <label>Art der Behebung / Durchgeführte Arbeiten</label>
+                <textarea name="tasks-${taskIndex}-fix_description" class="form-control"></textarea>
+
+                <label>Bezug / Seriennummer</label>
+                <input type="text" name="tasks-${taskIndex}-reference" class="form-control" />
+
+                <label>Ausführender</label>
+                <input type="text" name="tasks-${taskIndex}-executor" class="form-control" />
+
+                <button type="button" class="remove-task">🗑️</button>
+            </div>`;
+            taskContainer.insertAdjacentHTML('beforeend', newTaskHTML);
+            taskIndex++;
+        });
+
+        // Remove a task
+        taskContainer.addEventListener('click', function (event) {
+            if (event.target.classList.contains('remove-task')) {
+                event.target.parentElement.remove();
+            }
+        });
+    });
+</script>
 {% endblock %}
