@@ -34,6 +34,7 @@ def edit_report(report_id):
 
         # Clear existing tasks for this report
         Task.query.filter_by(report_id=report.id).delete()
+        db.session.expunge_all()  # Clear the session's identity map
         current_app.logger.info("Existing tasks deleted.")
 
         # Add new tasks
